@@ -5,6 +5,7 @@
  */
 package verteilte_systeme_aufgabe2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -19,6 +20,8 @@ public class MatrixMain_MasterSlave {
      * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
+        
+        long startTime = System.nanoTime();
         
         int[][] matrix_A = {
             {1,-2,3,4,-1},
@@ -40,14 +43,22 @@ public class MatrixMain_MasterSlave {
         
         Product product = new Product(matrix_A.length, matrix_B[0].length);
         
+        ArrayList<WorkerThread> threadPool = new ArrayList<>();
+        
         for(int i=0; i < matrix_A.length; i++) {
             for(int j=0; j < matrix_B[0].length; j++) {
                 int[] flipped_matrix = {matrix_B[0][j],matrix_B[1][j],matrix_B[2][j],matrix_B[3][j],matrix_B[4][j]};
-                new WorkerThread(matrix_A[i], flipped_matrix, product, "Thread "+i+"-"+j, i, j);
+                threadPool.add(new WorkerThread(matrix_A[i], flipped_matrix, product, "Thread "+i+"-"+j, i, j));
             }
         }
-        Thread.sleep(1000);
+        
+        for(WorkerThread wt : threadPool) {
+            wt.isAlive(); 
+        }
+        
         System.out.println(Arrays.deepToString(product.getProductMatrix()));
+        long endTime = System.nanoTime();
+        System.out.println(endTime - startTime);
         
         
     }

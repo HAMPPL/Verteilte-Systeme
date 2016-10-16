@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 public class Aufgabe2_Parallel {
 
     public static void main(String[] args) {
+        
+        long startTime = System.nanoTime();
 
         int[][] matrix_A = {
             {1, -2, 3, 4, -1},
@@ -36,13 +38,15 @@ public class Aufgabe2_Parallel {
         Matrix matrix = new Matrix(matrix_A, matrix_B);
         Product product = new Product(matrix_A.length, matrix_B[0].length);
         
+        int count = 0;
         while(!matrix.isFinished()) {
             new CalcThread(matrix, product, sem);
+            count ++;
         }
+        System.out.println("Es wurden " + count + " Threads benoetigt um die Matrizen zu multiplizieren");
         System.out.println(Arrays.deepToString(product.getProductMatrix()));
-        
-        
-
+        long endTime = System.nanoTime();
+        System.out.println(endTime - startTime);
     }
 
 }
