@@ -97,7 +97,7 @@ class Matrix {
         j = 0;
     }
 
-    public Calc getNextCalc() {
+    public synchronized Calc getNextCalc() {
         int[] flipped_matrix = {matrix_B[0][j],matrix_B[1][j],matrix_B[2][j],matrix_B[3][j],matrix_B[4][j]};
         Calc calc = new Calc(matrix_A[i], flipped_matrix, i, j); 
         if(!(j < (matrix_B[0].length -1))) {
@@ -138,13 +138,13 @@ class CalcThread extends Thread {
         
         while (!matrix.isFinished()) {
             
-            try {
+        /*    try {
                 sem.acquire();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Aufgabe2_Parallel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } */
             Calc calc = matrix.getNextCalc();
-            sem.release();
+          //  sem.release();
             int[] skalar_A = calc.skalar_A;
             int[] skalar_B = calc.skalar_B;
 
