@@ -23,6 +23,8 @@ public class MatrixMain_MasterSlave {
         
         long startTime = System.nanoTime();
         
+        int threadCount = Integer.valueOf(args[0]);
+        
         int[][] matrix_A = {
             {1,-2,3,4,-1},
             {-2,3,0,1,2},
@@ -53,7 +55,7 @@ public class MatrixMain_MasterSlave {
         }
         
         for(WorkerThread wt : threadPool) {
-            wt.isAlive(); 
+            wt.join();
         }
         
         System.out.println(Arrays.deepToString(product.getProductMatrix()));
