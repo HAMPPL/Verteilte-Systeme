@@ -14,9 +14,9 @@ import java.util.logging.Logger;
  *
  * @author Mike
  */
-public class Aufgabe2_Parallel {
+public class MatrixMain_Parallel {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         
         long startTime = System.nanoTime();
 
@@ -38,12 +38,16 @@ public class Aufgabe2_Parallel {
         Matrix matrix = new Matrix(matrix_A, matrix_B);
         Product product = new Product(matrix_A.length, matrix_B[0].length);
         
-        int count = 0;
-        while(!matrix.isFinished()) {
+        int threadCount = Integer.valueOf(args[0]);
+        
+        for(int i = 0; i < threadCount; i++) {
             new CalcThread(matrix, product, sem);
-            count ++;
         }
-        System.out.println("Es wurden " + count + " Threads benoetigt um die Matrizen zu multiplizieren");
+        
+        while(!matrix.isFinished()) {}
+        
+        Thread.sleep(50);
+        
         System.out.println(Arrays.deepToString(product.getProductMatrix()));
         long endTime = System.nanoTime();
         System.out.println(endTime - startTime);
@@ -129,7 +133,8 @@ class CalcThread extends Thread {
     Matrix matrix;
     Product product;
     Semaphore sem;
-
+    String threadName;
+    
     public CalcThread(Matrix matrix, Product product, Semaphore sem) {
         this.matrix = matrix;
         this.product = product;
