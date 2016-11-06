@@ -6,6 +6,8 @@
 package verteile_systeme_aufgabe4_client2;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -14,10 +16,15 @@ import java.net.Socket;
  */
 public class ClientVote {
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String ip = "127.0.0.1";
-        int port = 0;
+        int port = 4711;
         Socket socket = new Socket(ip,port);
+        PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+        writer.print("yes");
+        writer.flush();
+        Thread.sleep(1000);
+        socket.close();
     }
      
 }
