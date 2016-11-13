@@ -13,9 +13,9 @@ import java.io.Serializable;
  */
 public class VoteCount implements Serializable {
 
-    int yes;
-    int no;
-    int other;
+    public int yes;
+    public int no;
+    public int other;
     
     public VoteCount(int yes, int no, int other) {
         this.no = no;
