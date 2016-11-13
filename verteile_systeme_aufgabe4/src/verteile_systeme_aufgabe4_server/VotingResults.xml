@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <Yes></Yes>
-    <No></No>
-    <Other></Other>
-</root>
+<result>
+    <Yes>
+        <count>50</count>
+    </Yes>
+    <No>
+        <count>20</count>
+    </No>
+    <Other>
+        <count>10</count>
+    </Other>
+</result>
