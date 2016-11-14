@@ -19,8 +19,8 @@ public class Verteile_systeme_aufgabe3 {
      */
     public static void main(String[] args) throws InterruptedException {
         
-        int n = 10;
-        int k = 5;
+        int n = 4;
+        int k = 2;
         RecursiveThread uno = new RecursiveThread(n, k);
         uno.join();
         System.out.println(uno.answer);
@@ -54,8 +54,23 @@ class RecursiveThread extends Thread {
             }
             answer = (long)((double)n/k * recThread.answer);
         }
-            
         
+        
+       /* if(n==k||k==0) {
+            answer = 1;
+        } else {
+            RecursiveThread rec1 = new RecursiveThread(n-1,k);
+            RecursiveThread rec2 = new RecursiveThread(n-1,k-1);
+            
+            try {
+                rec1.join();
+                rec2.join();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RecursiveThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            answer = rec1.answer + rec2.answer;
+        }*/
+            
     }
     
 }
