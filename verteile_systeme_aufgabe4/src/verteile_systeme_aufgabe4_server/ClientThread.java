@@ -10,10 +10,15 @@ import java.io.File;
 import java.io.ObjectInputStream;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import verteile_systeme_aufgabe4_server.FileHandler;
 import verteile_systeme_aufgabe4_server.VoteCount;
 
 /*
@@ -29,10 +34,11 @@ public class ClientThread extends Thread {
 
     Socket clientSocket;
     ObjectOutputStream objectWriter = null;
-    
+    FileHandler fileHandler = null;
 
-    public ClientThread(Socket clientSocket) {
+    public ClientThread(Socket clientSocket, FileHandler fileHandler) {
         this.clientSocket = clientSocket;
+        this.fileHandler = fileHandler;
         try {
             objectWriter = new ObjectOutputStream(this.clientSocket.getOutputStream());
             objectWriter.flush();
@@ -43,25 +49,24 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
-        
+
         ObjectInputStream reader = null;
         try {
-            reader = new ObjectInputStream(clientSocket.getInputStream());       
-            String message = (String)reader.readObject();
+            reader = new ObjectInputStream(clientSocket.getInputStream());
+            String message = (String) reader.readObject();
             switch (message) {
-                case "yes":
+                case "Yes":
                     //Increase Vote Count
-                    parseXML("src\\verteile_systeme_aufgabe4_server\\VotingResults.xml");
+                    fileHandler.increaseVoteCount("Yes");
                     break;
-                case "no":
-                    System.out.println("no");
-                    objectWriter.writeObject(new VoteCount(0,5,10));
+                case "No":
+                    fileHandler.increaseVoteCount("No");
                     break;
-                case "other":
-                    //Increase Vote Count
+                case "Other":
+                    fileHandler.increaseVoteCount("Other");
                     break;
                 case "result":
-                //Return VoteCount object
+                    objectWriter.writeObject(fileHandler.parseXML());
             }
 
         } catch (IOException ex) {
@@ -74,29 +79,6 @@ public class ClientThread extends Thread {
             } catch (IOException ex) {
                 Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-    }
-
-    public void parseXML(String filename) {
-        try {
-            File inputFile = new File(filename);
-            DocumentBuilderFactory dbFactory
-                    = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-            System.out.println("Root element :"
-                    + doc.getDocumentElement().getNodeName());
-            NodeList nList = doc.getElementsByTagName("result");
-            System.out.println("----------------------------");
-            Node rNode = nList.item(0);
-            Element eElement = (Element) rNode;
-            NodeList childNodes = rNode.getChildNodes();
-            System.out.println(childNodes.item(0).getTextContent());
-            System.out.println(childNodes.item(1).getTextContent());
-            System.out.println(childNodes.item(2).getTextContent());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

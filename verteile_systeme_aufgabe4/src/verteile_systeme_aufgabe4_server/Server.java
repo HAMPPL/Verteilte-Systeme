@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
+import verteile_systeme_aufgabe4_server.FileHandler;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,9 +30,10 @@ public class Server {
 
         ServerSocket server = new ServerSocket(4711);
         Socket client = null;
+        FileHandler fileHandler = new FileHandler("src\\verteile_systeme_aufgabe4_server\\VotingResults.xml");
         while(true) {
             client = server.accept();
-            new ClientThread(client).start();    
+            new ClientThread(client,fileHandler).start();    
         }
         
     }

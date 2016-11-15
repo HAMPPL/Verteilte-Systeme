@@ -24,14 +24,12 @@ public class ClientRead {
         Socket socket = new Socket(ip,port);
         ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
         ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
-        writer.writeObject("no");
+        writer.writeObject("result");
         writer.flush();
-        System.out.println("anfrage isch raus");
-        Thread.sleep(1500);
-        System.out.println("lese object");
+        Thread.sleep(1000);
         VoteCount count = (VoteCount)reader.readObject();
         System.out.println(count);
-        System.out.println(count.no + " " + count.other + " " + count.yes);
+        System.out.println("No: " + count.no + " Other: " + count.other + " Yes: " + count.yes);
         Thread.sleep(1000);
         socket.close();
     }
