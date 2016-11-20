@@ -27,9 +27,8 @@ public class ClientRead {
         writer.writeObject("result");
         writer.flush();
         Thread.sleep(1000);
-        VoteCount count = (VoteCount)reader.readObject();
+        Object count = reader.readObject();
         System.out.println(count);
-        System.out.println("No: " + count.no + " Other: " + count.other + " Yes: " + count.yes);
         Thread.sleep(1000);
         socket.close();
     }

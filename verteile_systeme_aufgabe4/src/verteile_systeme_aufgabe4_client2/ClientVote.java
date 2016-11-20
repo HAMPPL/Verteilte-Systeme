@@ -8,10 +8,8 @@ package verteile_systeme_aufgabe4_client2;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
-import verteile_systeme_aufgabe4_server.VoteCount;
+
 
 /**
  *
@@ -21,9 +19,11 @@ public class ClientVote {
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
         
+        String ip = "192.168.0.";
+        int port = 4711;
+        
         for (int i = 0; i < 10; i++) {
-            String ip = "127.0.0.1";
-            int port = 4711;
+            
             Socket socket = new Socket(ip, port);
             ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
@@ -34,8 +34,6 @@ public class ClientVote {
         }
         
         for (int i = 0; i < 5; i++) {
-            String ip = "127.0.0.1";
-            int port = 4711;
             Socket socket = new Socket(ip, port);
             ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
@@ -46,8 +44,6 @@ public class ClientVote {
         }
         
         for (int i = 0; i < 5; i++) {
-            String ip = "127.0.0.1";
-            int port = 4711;
             Socket socket = new Socket(ip, port);
             ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());

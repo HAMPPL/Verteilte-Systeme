@@ -23,4 +23,8 @@ public class VoteCount implements Serializable {
         this.yes = yes;
     }
     
+    @Override
+    public String toString() {
+        return "Yes: " +yes+ ", No: " +no+ ", Other: " +other;
+    }    
 }
