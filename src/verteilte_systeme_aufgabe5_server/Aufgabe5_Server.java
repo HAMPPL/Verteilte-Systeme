@@ -22,9 +22,14 @@ public class Aufgabe5_Server {
     public static void main(String[] args) {
         try {
             MemImpl mem = new MemImpl();
-            MemInterface stub = (MemInterface) UnicastRemoteObject.exportObject(mem,0);
+            Registry reg = LocateRegistry.createRegistry(4711);
+            reg.rebind("mem", mem);
+            System.setProperty("java.rmi.server.hostname","127.0.0.1");
+            //Naming.rebind("rmi://localhost/Mem", reg);
+         /*   MemInterface stub = (MemInterface) UnicastRemoteObject.exportObject(mem,4711);
             Registry reg = LocateRegistry.getRegistry();
             reg.bind("Mem", stub);
+           */ 
             System.out.println("Server l");
         } 
         catch(Exception ex) {

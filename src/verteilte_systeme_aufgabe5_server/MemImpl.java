@@ -7,6 +7,7 @@ package verteilte_systeme_aufgabe5_server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Arrays;
 
 /**
  *
@@ -36,6 +37,8 @@ public class MemImpl extends UnicastRemoteObject implements MemInterface {
     @Override
     public int get() throws RemoteException {
         if(counter != 0) {
+            System.out.println(Arrays.toString(puffer));
+            System.out.println(out);
             int returnVal = puffer[out];
             out = (out+1)%range;
             counter --;

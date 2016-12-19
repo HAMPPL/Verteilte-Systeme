@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package verteilte_systeme_aufgabe5_client;
+package verteilte_systeme_aufgabe5_server;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -25,6 +25,9 @@ public class Aufgabe5_Client {
         try {
             MemInterface mem = (MemInterface) Naming.lookup("rmi://127.0.0.1:4711/mem");
             mem.put(5);
+            mem.put(2);
+            System.out.println(mem.get());
+            mem.put(3);
             System.out.println(mem.get());
         } catch (Exception ex) {
             Logger.getLogger(Aufgabe5_Client.class.getName()).log(Level.SEVERE, null, ex);
