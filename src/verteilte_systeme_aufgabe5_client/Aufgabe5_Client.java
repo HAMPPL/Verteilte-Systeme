@@ -23,8 +23,7 @@ public class Aufgabe5_Client {
     public static void main(String[] args) {
         String host = null;
         try {
-            Registry reg = LocateRegistry.getRegistry(host);
-            MemInterface mem = (MemInterface) Naming.lookup("rmi://localhost/Mem");
+            MemInterface mem = (MemInterface) Naming.lookup("rmi://127.0.0.1:4711/mem");
             mem.put(5);
             System.out.println(mem.get());
         } catch (Exception ex) {
