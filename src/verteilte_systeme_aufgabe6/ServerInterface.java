@@ -15,6 +15,6 @@ public interface ServerInterface extends java.rmi.Remote {
     
     public boolean addClient(ClientInterface ref) throws RemoteException;
     public void removeClient(ClientInterface ref) throws RemoteException;
-    public void sendMessage(String name, String msg) throws RemoteException;
+    public void sendMessage(String msg) throws RemoteException;
     
 }

@@ -26,7 +26,7 @@ public class Client {
     public static void main(String[] args) {
         try{
             ServerInterface server = (ServerInterface)Naming.lookup("rmi://127.0.0.1:4711/server");
-            ClientImplem client = new ClientImplem("client4");
+            ClientImplem client = new ClientImplem("client3");
             
             if(server.addClient(client)) {
                 //System.out.println("Give Input");
@@ -44,20 +44,6 @@ public class Client {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.exit(0);
-    }
-    
-    private static void sendInputToServer(ServerInterface server, String name) {
-        try{
-            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-            String line;
-            while((line = input.readLine()) != null) {
-                if(line.equals("ende") || line.equals("Ende")) 
-                    break;
-                server.sendMessage(name, line);
-            }
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
     }
     
 }

@@ -21,49 +21,10 @@ public class ServerImplem extends UnicastRemoteObject implements ServerInterface
     
     public ServerImplem() throws RemoteException {
         allClients = new ArrayList<>();
-        /* try{
-            repeatPrinting();
-        }catch(Exception ex) {
-            ex.printStackTrace();
-        }*/
-        Thread t = new Thread() {
-            public void run() {
-                while(true) {
-                    try {
-                        sendMessage("asd","asd");
-                        Thread.sleep(5000);
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(ServerImplem.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(ServerImplem.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        };
-        t.start();
-    }
-    
-    public synchronized void repeatPrinting() throws RemoteException, InterruptedException {
-        while(true) {
-            sendMessage("fick","dich");
-            Thread.sleep(5000);
-        }
     }
 
     @Override
     public synchronized boolean addClient(ClientInterface ref) throws RemoteException {
-        String name = ref.getName();
-        System.out.println(name);
-        for(Iterator<ClientInterface> iter = allClients.iterator();iter.hasNext();) {
-            ClientInterface client = iter.next();
-            try {
-                if(client.getName().equals(name))
-                    return false;
-            }catch(RemoteException ex) {
-                iter.remove();
-            }
-            
-        }
         allClients.add(ref);
         return true;
     }
@@ -74,12 +35,12 @@ public class ServerImplem extends UnicastRemoteObject implements ServerInterface
     }
 
     @Override
-    public synchronized void sendMessage(String name, String msg) throws RemoteException {
+    public synchronized void sendMessage(String msg) throws RemoteException {
         Random random = new Random();
         for(Iterator<ClientInterface>iter = allClients.iterator();iter.hasNext();) {
             ClientInterface client = iter.next();
             try{
-                client.print(Integer.toString(random.nextInt(10)));
+                client.print(msg);
             }catch(RemoteException ex) {
                 iter.remove();
             }

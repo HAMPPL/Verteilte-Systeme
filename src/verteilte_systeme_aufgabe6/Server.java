@@ -25,6 +25,10 @@ public class Server {
             ServerImplem server = new ServerImplem();
             Registry reg = LocateRegistry.createRegistry(4711);
             reg.rebind("server", server);
+            while(true){
+                Thread.sleep(2000);
+                server.sendMessage(String.valueOf((int) (Math.random() * 100)));
+            }
         } catch (Exception ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
